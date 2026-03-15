@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Development
-npx @tailwindcss/cli -i ./ui/static/input.css -o ./ui/static/output.css
+npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css
 
-go tool templ generate
-go run *.go
+templ generate
+go run ./cmd/**/*.go

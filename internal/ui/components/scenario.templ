@@ -1,0 +1,128 @@
+package ui
+
+import "github.com/aaronlee232/redis-gui-tester/internal/models"
+
+//go:generate templ
+
+// StatusIcon returns the appropriate icon for a scenario status
+// TODO: Status field needs to be added to Scenario model
+func getStatusIcon(status models.ScenarioStatus) string {
+	switch status {
+	case models.StatusPassed:
+		return "✓"
+	case models.StatusFailed:
+		return "✗"
+	default:
+		return "−"
+	}
+}
+
+func getStatusColor(status models.ScenarioStatus) string {
+	switch status {
+	case models.StatusPassed:
+		return "text-success"
+	case models.StatusFailed:
+		return "text-error"
+	default:
+		return "text-base-content/40"
+	}
+}
+
+// The individual item (Accordion)
+templ ScenarioItem(s *models.Scenario) {
+	<div class="collapse collapse-plus border border-base-300 bg-base-100 rounded-lg">
+		<input type="checkbox" class="peer"/>
+		<div class="collapse-title flex items-center gap-4 font-semibold text-base peer-checked:bg-base-200 transition-colors peer-checked:font-bold">
+			<!-- Status Icon -->
+			<span class={ "text-xl shrink-0", getStatusColor(s.Status) }>
+				{ getStatusIcon(s.Status) }
+			</span>
+			<!-- Scenario Title -->
+			<span class="grow">{ s.Title }</span>
+		</div>
+		<div class="collapse-content pt-4">
+			<div class="divider my-0"></div>
+			<!-- Two-column layout -->
+			<div class="flex w-full">
+				<!-- Left Column -->
+				<div class="flex-1 flex flex-col space-y-4">
+					<!-- Description Section -->
+					<div>
+						<label class="label pb-2">
+							<span class="label-text font-semibold">Description</span>
+						</label>
+						<p class="text-sm text-base-content/80 leading-relaxed">{ s.Description }</p>
+					</div>
+					<!-- Commands Section -->
+					<div>
+						<label class="label pb-2">
+							<span class="label-text font-semibold">Commands</span>
+						</label>
+						<div class="bg-base-900 text-base-100 p-3 rounded-lg text-xs overflow-x-auto border border-base-300 font-mono">
+							<code>
+								for _, cmd := range s.Commands {
+									<div class="py-1">
+										<span class="text-base-content/50">$ redis-cli</span>
+										<span class="text-base-content">{ cmd }</span>
+									</div>
+								}
+							</code>
+						</div>
+					</div>
+					<div class="mt-auto flex flex-row gap-2">
+						<!-- Run Button -->
+						<div class="grow pt-2">
+							<button class="min-w-full btn btn-success btn-sm">Run Scenario</button>
+						</div>
+						<!-- Edit Button -->
+						<div class="pt-2">
+							<button class="btn btn-primary btn-sm">Edit</button>
+						</div>
+						<!-- Delete Button -->
+						<div class="pt-2">
+							<button class="btn btn-error btn-sm">Delete</button>
+						</div>
+					</div>
+				</div>
+				<!-- Vertical Divider -->
+				<div class="grow-0 divider divider-horizontal"></div>
+				<!-- Right Column (Terminal Output) -->
+				<div class="flex-1 space-y-4 flex flex-col">
+					<!-- Redis Responses Terminal -->
+					<div class="flex-1 flex flex-col">
+						<label class="label pb-2">
+							<span class="label-text font-semibold">Redis Responses</span>
+						</label>
+						<div class="bg-base-900 text-success p-3 rounded-lg font-mono text-xs overflow-y-auto border border-base-600 flex-1 min-h-32" hx-target="this">
+							<!-- Terminal content populated via HTMX or command execution -->
+						</div>
+					</div>
+					<!-- Horizontal Divider -->
+					// <div class="divider my-2"></div>
+					<!-- Expected Responses Terminal -->
+					<div class="flex-1 flex flex-col">
+						<label class="label pb-2">
+							<span class="label-text font-semibold">Expected Responses</span>
+						</label>
+						<div class="bg-base-900 text-info p-3 rounded-lg font-mono text-xs overflow-y-auto border border-base-600 flex-1 min-h-32">
+							<code>
+								for _, res := range s.ExpectedResponse {
+									<div class="py-1">{ res }</div>
+								}
+							</code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+// The full list container
+templ ScenarioList(scenarios []*models.Scenario) {
+	<ul class="space-y-3">
+		for _, s := range scenarios {
+			@ScenarioItem(s)
+		}
+	</ul>
+}

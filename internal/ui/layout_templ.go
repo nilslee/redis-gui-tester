@@ -8,6 +8,8 @@ package ui
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/aaronlee232/redis-gui-tester/internal/ui/components"
+
 //go:generate templ
 func Layout(title string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -37,42 +39,34 @@ func Layout(title string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/templates/layout.templ`, Line: 11, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/ui/layout.templ`, Line: 11, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><script src=\"/static/htmx.min.js\"></script><link href=\"/static/output.css\" rel=\"stylesheet\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.15.8/dist/cdn.min.js\"></script></head><body class=\"min-h-screen bg-base-200 pt-8\"><main class=\"container mx-auto max-w-6xl p-4 flex flex-col gap-4\" x-data><h1 class=\"text-2xl font-bold\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><script src=\"/static/js/htmx.min.js\"></script><link href=\"/static/css/output.css\" rel=\"stylesheet\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.15.8/dist/cdn.min.js\"></script></head><body class=\"min-h-screen bg-base-200 pt-8\"><main class=\"container mx-auto max-w-6xl p-4 flex flex-col gap-4\" x-data><h1 class=\"text-2xl font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/templates/layout.templ`, Line: 19, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/ui/layout.templ`, Line: 18, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</h1><div class=\"flex flex-wrap items-center justify-between gap-2\"><div role=\"tablist\" class=\"tabs tabs-boxed bg-base-100 p-1 rounded-lg\"><a role=\"tab\" class=\"tab tab-active\" aria-selected=\"true\">All</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Untested</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Failed</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Passed</a></div><button type=\"button\" class=\"btn btn-fill btn-success\" aria-label=\"Add scenario\" @click=\"document.getElementById('saveScenarioModal').showModal()\"><span class=\"p-1 leading-none\">New Scenario</span></button></div><div class=\"flex flex-wrap items-center gap-2\"><input type=\"search\" placeholder=\"Search Scenarios\" class=\"input input-bordered flex-1 min-w-0 max-w-md\" name=\"q\"> <button type=\"button\" class=\"btn btn-primary\">RUN ALL</button></div><div class=\"flex-1 min-h-0\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</h1><div class=\"flex flex-wrap items-center justify-between gap-2\"><div role=\"tablist\" class=\"tabs tabs-boxed bg-base-100 p-1 rounded-lg\"><a role=\"tab\" class=\"tab tab-active\" aria-selected=\"true\">All</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Untested</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Failed</a> <a role=\"tab\" class=\"tab\" aria-selected=\"false\">Passed</a></div><button type=\"button\" class=\"btn btn-fill btn-success\" aria-label=\"Add scenario\" @click=\"document.getElementById('saveScenarioModal').showModal()\"><span class=\"p-1 leading-none\">New Scenario</span></button></div><div class=\"flex flex-wrap items-center gap-2\"><input type=\"search\" placeholder=\"Search Scenarios\" class=\"input input-bordered flex-1 min-w-0 max-w-md\" name=\"q\"> <button type=\"button\" class=\"btn btn-primary\">RUN ALL</button></div><div class=\"flex-1 min-h-0\"><ul id=\"scenario-list\" hx-get=\"/api/scenario/get-all\" hx-trigger=\"load, refreshScenarioList\"></ul></div></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.SaveScenarioModal().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></main>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = SaveScenarioModal().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

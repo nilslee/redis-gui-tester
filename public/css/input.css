@@ -6,5 +6,5 @@
 }
 
 /* Scan templ templates and generated Go for Tailwind classes */
-@source "../templates/**/*.templ";
-@source "../templates/**/*_templ.go";
+@source "../../internal/ui/**/*.templ";
+@source "../../internal/ui/**/*_templ.go";
