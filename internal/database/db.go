@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 func InitDB() *sql.DB {
@@ -18,6 +18,11 @@ func InitDB() *sql.DB {
 
 	// Set up app.db file
 	dbPath := filepath.Join(root, "data", "app.db")
+
+	dir := filepath.Dir(dbPath)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		log.Fatalf("failed to create directories: %v", err)
+	}
 	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
 		// File does not exist, safe to create
 		f, _ := os.Create(dbPath)
@@ -26,7 +31,7 @@ func InitDB() *sql.DB {
 
 	// Open DB Connection
 	dsn := dbPath + "?_foreign_keys=on"
-	db, err := sql.Open("sqlite3", dsn)
+	db, err := sql.Open("sqlite", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
