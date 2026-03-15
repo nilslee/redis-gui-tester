@@ -146,7 +146,7 @@ func ScenarioItem(s *models.Scenario) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, res := range s.ExpectedResponse {
+		for _, res := range s.ExpectedResponses {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"py-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

@@ -4,14 +4,14 @@ import (
 	"net/http"
 )
 
-func RunScenario(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) RunScenario(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func RunAllScenarios(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) RunAllScenarios(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetScenarioOutput(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetScenarioOutput(w http.ResponseWriter, r *http.Request) {
 
 }

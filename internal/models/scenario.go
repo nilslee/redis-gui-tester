@@ -9,19 +9,20 @@ const (
 )
 
 type Scenario struct {
-	Title            string
-	Description      string
-	Commands         []string
-	ExpectedResponse []string
-	Status           ScenarioStatus
+	ID                int            `json:"ID"`
+	Title             string         `json:"title"`
+	Description       string         `json:"description"`
+	Commands          []string       `json:"commands"`
+	ExpectedResponses []string       `json:"expected_responses"`
+	Status            ScenarioStatus `json:"status"`
 }
 
-func NewScenario(title string, description string, commands []string, expectedResponse []string, status ScenarioStatus) *Scenario {
+func NewScenario(title string, description string, commands []string, expectedResponses []string, status ScenarioStatus) *Scenario {
 	return &Scenario{
-		Title:            title,
-		Description:      description,
-		Commands:         commands,
-		ExpectedResponse: expectedResponse,
-		Status:           status,
+		Title:             title,
+		Description:       description,
+		Commands:          commands,
+		ExpectedResponses: expectedResponses,
+		Status:            status,
 	}
 }
